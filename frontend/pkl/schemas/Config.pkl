@@ -1,0 +1,4 @@
+module Config
+
+port: UInt16 = 5173
+apiUrl: String
