@@ -29,31 +29,37 @@ export function HomePage() {
   }
 
   const profilePicUrl = aboutPage?.profilePic
-    ? `${config.apiUrl.replace('/api', '')}${aboutPage.profilePic.formats?.medium?.url || aboutPage.profilePic.url}`
+    ? `${config.apiUrl.replace('/api', '')}${aboutPage.profilePic.formats?.large?.url || aboutPage.profilePic.url}`
     : null;
 
   return (
     <div className="home-page">
-      <section className="hero">
-        {profilePicUrl && (
-          <img
-            src={profilePicUrl}
-            alt={aboutPage?.profilePic?.alternativeText || 'Profile picture'}
-            className="profile-pic"
-          />
-        )}
-        <h1>{aboutPage?.title}</h1>
-        {aboutPage?.subtitle && (
-          <p className="subtitle">{aboutPage.subtitle}</p>
-        )}
-        {aboutPage?.body && (
-          <div className="body-content">
-            <Markdown>{aboutPage.body}</Markdown>
+      <section className="about-section">
+        <div className="about-content">
+          <div className="about-text">
+            <h1>{aboutPage?.title}</h1>
+            {aboutPage?.subtitle && (
+              <p className="subtitle">{aboutPage.subtitle}</p>
+            )}
+            {aboutPage?.body && (
+              <div className="body-content">
+                <Markdown>{aboutPage.body}</Markdown>
+              </div>
+            )}
+            <Link to="/portfolio" className="cta-button">
+              View Portfolio
+            </Link>
           </div>
-        )}
-        <Link to="/portfolio" className="cta-button">
-          View Portfolio
-        </Link>
+          {profilePicUrl && (
+            <div className="about-image">
+              <img
+                src={profilePicUrl}
+                alt={aboutPage?.profilePic?.alternativeText || 'Profile picture'}
+                className="profile-pic"
+              />
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );

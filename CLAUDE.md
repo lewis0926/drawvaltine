@@ -25,6 +25,30 @@ Frontend consumes content from a headless CMS.
 - **Page-level styles go in separate CSS files** (e.g., `HomePage.css`, `PortfolioPage.css`)
 - Component-specific styles go alongside their components (e.g., `Header.css`)
 
+#### CSS Nesting Rules
+- **Always use nested structure** for related selectors (improves readability)
+- Nest child selectors, pseudo-classes, and pseudo-elements inside their parent
+- Nest `@media` queries inside the relevant selector block
+- Example:
+    ```css
+    .parent {
+      color: blue;
+
+      .child {
+        color: red;
+      }
+
+      &:hover {
+        color: green;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
+    }
+    ```
+- **Avoid flat selectors** like `.parent .child { }` when nesting is clearer
+
 ### Schemas (Zod)
 - **Do not use a single monolithic schema file**
 - Separate schemas by domain (e.g., `media.schema.ts`, `artwork.schema.ts`, `portfolio.schema.ts`)
