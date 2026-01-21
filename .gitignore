@@ -8,7 +8,7 @@ build/
 
 # Environment files
 frontend/pkl/configs
-backend/pkl/configs
+strapi/pkl/configs
 
 # Generated config
 config.json
@@ -29,18 +29,19 @@ Thumbs.db
 npm-debug.log*
 
 # Strapi
-backend/.tmp/
-backend/.strapi/
-backend/exports/
-
-# Database (keep structure, ignore data)
-backend/database/*.db
-backend/database/*.db-journal
-!backend/database/.gitkeep
-
-# Uploads (keep structure, ignore files)
-backend/public/uploads/*
-!backend/public/uploads/.gitkeep
+strapi/.env
+strapi/license.txt
+strapi/exports
+strapi/.strapi
+strapi/dist
+strapi/build
+strapi/.strapi-updater.json
+strapi/.strapi-cloud.json
+strapi/.tmp
+strapi/*.sql
+strapi/*.sqlite
+strapi/*.sqlite3
+strapi/public/uploads/*
 
 # TypeScript
 *.tsbuildinfo

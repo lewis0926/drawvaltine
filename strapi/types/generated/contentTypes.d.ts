@@ -441,6 +441,7 @@ export interface ApiPortfolioPortfolio extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    artworks: Schema.Attribute.Component<'objects.artwork', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
