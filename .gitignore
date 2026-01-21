@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Generated config
+config.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Strapi
+backend/.tmp/
+backend/.strapi/
+backend/exports/
+
+# Database (keep structure, ignore data)
+backend/database/*.db
+backend/database/*.db-journal
+!backend/database/.gitkeep
+
+# Uploads (keep structure, ignore files)
+backend/public/uploads/*
+!backend/public/uploads/.gitkeep
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
