@@ -1,14 +1,19 @@
+import { Routes, Route } from 'react-router-dom'
+import { Header } from './components/Header'
+import { HomePage } from './pages/HomePage'
+import { PortfolioPage } from './pages/PortfolioPage'
+
 function App() {
   return (
-    <main className="container">
-      <header>
-        <h1>Drawvaltine</h1>
-        <p className="description">Art Portfolio</p>
-      </header>
-      <section className="gallery">
-        <p>Gallery content will appear here</p>
-      </section>
-    </main>
+    <>
+      <Header />
+      <main className="container">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/portfolio" element={<PortfolioPage />} />
+        </Routes>
+      </main>
+    </>
   )
 }
 

@@ -1,43 +1,45 @@
-import { z } from 'zod'
-import { ArtworkListResponseSchema, ArtworkResponseSchema } from './schemas'
-import type { ArtworkListResponse, ArtworkResponse } from './schemas'
+import { getConfig } from '../config';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:1337'
+type RequestOptions = Omit<RequestInit, 'method' | 'body'>;
 
-async function fetchApi<T>(
+async function request<T>(
+  method: string,
   endpoint: string,
-  schema: z.ZodSchema<T>,
+  body?: unknown,
+  options?: RequestOptions
 ): Promise<T> {
-  const response = await fetch(`${API_URL}/api${endpoint}`)
+  const config = getConfig();
+  const url = `${config.apiUrl}${endpoint}`;
+
+  const response = await fetch(url, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...options?.headers,
+    },
+    body: body ? JSON.stringify(body) : undefined,
+    ...options,
+  });
 
   if (!response.ok) {
-    throw new Error(`API error: ${response.status} ${response.statusText}`)
+    throw new Error(`API Error: ${response.status} ${response.statusText}`);
   }
 
-  const data = await response.json()
-  return schema.parse(data)
+  return response.json();
 }
 
-export async function getArtworks(
-  page = 1,
-  pageSize = 12,
-): Promise<ArtworkListResponse> {
-  const params = new URLSearchParams({
-    'pagination[page]': String(page),
-    'pagination[pageSize]': String(pageSize),
-    'populate': 'image',
-    'sort': 'createdAt:desc',
-  })
-  return fetchApi(`/artworks?${params}`, ArtworkListResponseSchema)
+export function getApi<T>(endpoint: string, options?: RequestOptions): Promise<T> {
+  return request<T>('GET', endpoint, undefined, options);
 }
 
-export async function getArtwork(id: number): Promise<ArtworkResponse> {
-  return fetchApi(`/artworks/${id}?populate=image`, ArtworkResponseSchema)
+export function postApi<T>(endpoint: string, body: unknown, options?: RequestOptions): Promise<T> {
+  return request<T>('POST', endpoint, body, options);
 }
 
-export function getImageUrl(path: string): string {
-  if (path.startsWith('http')) {
-    return path
-  }
-  return `${API_URL}${path}`
+export function putApi<T>(endpoint: string, body: unknown, options?: RequestOptions): Promise<T> {
+  return request<T>('PUT', endpoint, body, options);
+}
+
+export function deleteApi<T>(endpoint: string, options?: RequestOptions): Promise<T> {
+  return request<T>('DELETE', endpoint, undefined, options);
 }
