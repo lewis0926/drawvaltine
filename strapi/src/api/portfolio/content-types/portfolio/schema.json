@@ -4,20 +4,15 @@
   "info": {
     "singularName": "portfolio",
     "pluralName": "portfolios",
-    "displayName": "Portfolio"
+    "displayName": "Portfolio Page"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "artworks": {
-      "type": "component",
-      "component": "objects.artwork",
-      "repeatable": true
-    },
-    "description": {
-      "type": "text"
+    "body": {
+      "type": "richtext"
     }
   }
 }

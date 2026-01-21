@@ -2,10 +2,14 @@
   margin-bottom: var(--spacing-md);
 }
 
-.portfolio-description {
-  color: var(--color-text-light);
+.portfolio-body {
   max-width: 800px;
   margin-bottom: var(--spacing-xl);
+  line-height: 1.7;
+}
+
+.portfolio-body p {
+  margin-bottom: var(--spacing-md);
 }
 
 .gallery {
@@ -19,6 +23,7 @@
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   overflow: hidden;
+  cursor: pointer;
   transition: box-shadow var(--transition-speed), transform var(--transition-speed);
 
   &:hover {
@@ -63,10 +68,86 @@
   overflow: hidden;
 }
 
+/* Lightbox styles */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-lg);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: var(--spacing-sm);
+  opacity: 0.8;
+  transition: opacity var(--transition-speed);
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--border-radius);
+}
+
+.lightbox-info {
+  color: white;
+  text-align: center;
+  margin-top: var(--spacing-md);
+  max-width: 600px;
+}
+
+.lightbox-title {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+}
+
+.lightbox-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-base);
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .gallery {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: var(--spacing-md);
+  }
+
+  .lightbox-overlay {
+    padding: var(--spacing-md);
+  }
+
+  .lightbox-close {
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
   }
 }
 

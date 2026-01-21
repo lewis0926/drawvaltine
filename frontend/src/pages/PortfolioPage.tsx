@@ -1,10 +1,49 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getPortfolio } from '../api/api';
+import Markdown from 'react-markdown';
+import { getPortfolio, getArtworks } from '../api/api';
 import { getConfig } from '../config';
-import type { Artwork } from '../schemas';
+import type { Artwork, Media } from '../schemas';
 import './PortfolioPage.css';
 
-function ArtworkCard({ artwork }: { artwork: Artwork }) {
+interface LightboxProps {
+  image: Media;
+  artwork: Artwork;
+  onClose: () => void;
+}
+
+function Lightbox({ image, artwork, onClose }: LightboxProps) {
+  const config = getConfig();
+  const imageUrl = `${config.apiUrl.replace('/api', '')}${image.formats?.large?.url || image.url}`;
+
+  return (
+    <div className="lightbox-overlay" onClick={onClose}>
+      <button className="lightbox-close" onClick={onClose} aria-label="Close">
+        &times;
+      </button>
+      <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+        <img
+          src={imageUrl}
+          alt={image.alternativeText || artwork.title || 'Artwork'}
+          className="lightbox-image"
+        />
+        {(artwork.title || artwork.description) && (
+          <div className="lightbox-info">
+            {artwork.title && <h2 className="lightbox-title">{artwork.title}</h2>}
+            {artwork.description && <p className="lightbox-description">{artwork.description}</p>}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+interface ArtworkCardProps {
+  artwork: Artwork;
+  onClick: () => void;
+}
+
+function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
   const config = getConfig();
   const firstImage = artwork.image[0];
   const imageUrl = firstImage
@@ -12,7 +51,7 @@ function ArtworkCard({ artwork }: { artwork: Artwork }) {
     : null;
 
   return (
-    <article className="artwork-card">
+    <article className="artwork-card" onClick={onClick}>
       {imageUrl && (
         <div className="artwork-image-container">
           <img
@@ -32,9 +71,16 @@ function ArtworkCard({ artwork }: { artwork: Artwork }) {
 }
 
 export function PortfolioPage() {
-  const { data: portfolio, isLoading, error } = useQuery({
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+
+  const { data: portfolio } = useQuery({
     queryKey: ['portfolio'],
     queryFn: getPortfolio,
+  });
+
+  const { data: artworks, isLoading, error } = useQuery({
+    queryKey: ['artworks'],
+    queryFn: getArtworks,
   });
 
   if (isLoading) {
@@ -56,16 +102,29 @@ export function PortfolioPage() {
   return (
     <div className="portfolio-page">
       <h1>Portfolio</h1>
-      {portfolio?.description && (
-        <p className="portfolio-description">{portfolio.description}</p>
+      {portfolio?.body && (
+        <div className="portfolio-body">
+          <Markdown>{portfolio.body}</Markdown>
+        </div>
       )}
       <div className="gallery">
-        {portfolio?.artworks.map((artwork) => (
-          <ArtworkCard key={artwork.id} artwork={artwork} />
+        {artworks?.map((artwork) => (
+          <ArtworkCard
+            key={artwork.id}
+            artwork={artwork}
+            onClick={() => setSelectedArtwork(artwork)}
+          />
         ))}
       </div>
-      {portfolio?.artworks.length === 0 && (
+      {artworks?.length === 0 && (
         <p className="empty-message">No artworks to display yet.</p>
+      )}
+      {selectedArtwork && selectedArtwork.image[0] && (
+        <Lightbox
+          image={selectedArtwork.image[0]}
+          artwork={selectedArtwork}
+          onClose={() => setSelectedArtwork(null)}
+        />
       )}
     </div>
   );
