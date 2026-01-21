@@ -18,10 +18,17 @@ Frontend consumes content from a headless CMS.
 
 ### Styling
 - Plain CSS with nesting
-- Global styles in `App.css`
-- `App.css` defines:
-    - CSS variables (primary/secondary colors, text, background)
-    - Base styles (buttons, headings, descriptions, links)
+- `App.css` is for **common/root styles only**:
+    - CSS variables (colors, spacing, typography)
+    - Base resets and body styles
+    - Common utility classes (`.container`, `.loading`, `.error`)
+- **Page-level styles go in separate CSS files** (e.g., `HomePage.css`, `PortfolioPage.css`)
+- Component-specific styles go alongside their components (e.g., `Header.css`)
+
+### Schemas (Zod)
+- **Do not use a single monolithic schema file**
+- Separate schemas by domain (e.g., `media.schema.ts`, `artwork.schema.ts`, `portfolio.schema.ts`)
+- Use `schemas/index.ts` only for re-exports
 
 ---
 

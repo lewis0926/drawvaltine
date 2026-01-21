@@ -1,0 +1,24 @@
+.home-page {
+  text-align: center;
+}
+
+.hero {
+  padding: var(--spacing-2xl) 0;
+}
+
+.hero h1 {
+  font-size: clamp(var(--font-size-xl), 5vw, 3rem);
+  margin-bottom: var(--spacing-md);
+}
+
+.hero .description {
+  font-size: var(--font-size-lg);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--spacing-xl) 0;
+  }
+}

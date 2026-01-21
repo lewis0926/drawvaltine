@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPortfolio } from '../api/api';
 import { getConfig } from '../config';
 import type { Artwork } from '../schemas';
+import './PortfolioPage.css';
 
 function ArtworkCard({ artwork }: { artwork: Artwork }) {
   const config = getConfig();

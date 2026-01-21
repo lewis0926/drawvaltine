@@ -6,6 +6,9 @@ dist/
 build/
 .cache/
 
+# Claude
+.claude
+
 # Environment files
 frontend/pkl/configs
 strapi/pkl/configs
