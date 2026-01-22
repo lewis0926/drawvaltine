@@ -12,11 +12,14 @@ services:
     build:
       context: ./strapi
       dockerfile: Dockerfile
+    image: drawvaltine/strapi
+    # restart: unless-stopped
+    env_file:
+      - ./strapi/.env
     ports:
       - 1337:1337
     volumes:
-      - ./strapi/.env:/app/.env:ro
-      - strapi_data:/app/.tmp
+      - strapi_data:/app/db
       - strapi_uploads:/app/public/uploads
 
 volumes:

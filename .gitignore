@@ -45,6 +45,7 @@ strapi/*.sql
 strapi/*.sqlite
 strapi/*.sqlite3
 strapi/public/uploads/*
+!strapi/public/uploads/.gitkeep
 
 # TypeScript
 *.tsbuildinfo
