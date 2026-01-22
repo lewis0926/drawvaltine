@@ -45,9 +45,9 @@ interface ArtworkCardProps {
 
 function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
   const config = getConfig();
-  const firstImage = artwork.image[0];
-  const imageUrl = firstImage
-    ? `${config.apiUrl.replace('/api', '')}${firstImage.formats?.medium?.url || firstImage.url}`
+  const image = artwork.image;
+  const imageUrl = image
+    ? `${config.apiUrl.replace('/api', '')}${image.formats?.medium?.url || image.url}`
     : null;
 
   return (
@@ -56,7 +56,7 @@ function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
         <div className="artwork-image-container">
           <img
             src={imageUrl}
-            alt={firstImage?.alternativeText || artwork.title || 'Artwork'}
+            alt={image?.alternativeText || artwork.title || 'Artwork'}
             className="artwork-image"
             loading="lazy"
           />
@@ -92,6 +92,7 @@ export function PortfolioPage() {
   }
 
   if (error) {
+    console.error('Error fetching portfolio data:', error);
     return (
       <div className="portfolio-page">
         <div className="error">Failed to load portfolio. Please try again later.</div>
@@ -119,9 +120,9 @@ export function PortfolioPage() {
       {artworks?.length === 0 && (
         <p className="empty-message">No artworks to display yet.</p>
       )}
-      {selectedArtwork && selectedArtwork.image[0] && (
+      {selectedArtwork && selectedArtwork.image && (
         <Lightbox
-          image={selectedArtwork.image[0]}
+          image={selectedArtwork.image}
           artwork={selectedArtwork}
           onClose={() => setSelectedArtwork(null)}
         />

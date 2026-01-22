@@ -430,12 +430,12 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiAboutpageAboutpage extends Struct.SingleTypeSchema {
-  collectionName: 'aboutpages';
+export interface ApiAboutPageAboutPage extends Struct.SingleTypeSchema {
+  collectionName: 'about_pages';
   info: {
     displayName: 'About Page';
-    pluralName: 'aboutpages';
-    singularName: 'aboutpage';
+    pluralName: 'about-pages';
+    singularName: 'about-page';
   };
   options: {
     draftAndPublish: true;
@@ -448,10 +448,13 @@ export interface ApiAboutpageAboutpage extends Struct.SingleTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::aboutpage.aboutpage'
+      'api::about-page.about-page'
     > &
       Schema.Attribute.Private;
-    profilePic: Schema.Attribute.Media<'images'>;
+    profilePic: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    > &
+      Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
     subtitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -476,10 +479,8 @@ export interface ApiArtworkArtwork extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -494,12 +495,12 @@ export interface ApiArtworkArtwork extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiPortfolioPortfolio extends Struct.SingleTypeSchema {
-  collectionName: 'portfolios';
+export interface ApiPortfolioPagePortfolioPage extends Struct.SingleTypeSchema {
+  collectionName: 'portfolio_pages';
   info: {
     displayName: 'Portfolio Page';
-    pluralName: 'portfolios';
-    singularName: 'portfolio';
+    pluralName: 'portfolio-pages';
+    singularName: 'portfolio-page';
   };
   options: {
     draftAndPublish: true;
@@ -512,7 +513,7 @@ export interface ApiPortfolioPortfolio extends Struct.SingleTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
-      'api::portfolio.portfolio'
+      'api::portfolio-page.portfolio-page'
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
@@ -1032,9 +1033,9 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
-      'api::aboutpage.aboutpage': ApiAboutpageAboutpage;
+      'api::about-page.about-page': ApiAboutPageAboutPage;
       'api::artwork.artwork': ApiArtworkArtwork;
-      'api::portfolio.portfolio': ApiPortfolioPortfolio;
+      'api::portfolio-page.portfolio-page': ApiPortfolioPagePortfolioPage;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

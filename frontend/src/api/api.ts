@@ -11,7 +11,7 @@ import {
 } from '../schemas';
 
 export async function getPortfolio(): Promise<Portfolio> {
-  const response = await getApi<unknown>('/portfolio');
+  const response = await getApi<unknown>('/portfolio-page');
   const validated = StrapiResponseSchema(PortfolioSchema).parse(response);
   return validated.data;
 }
@@ -23,7 +23,7 @@ export async function getArtworks(): Promise<Artwork[]> {
 }
 
 export async function getAboutPage(): Promise<AboutPage> {
-  const response = await getApi<unknown>('/aboutpage?populate=profilePic');
+  const response = await getApi<unknown>('/about-page?populate=profilePic');
   const validated = StrapiResponseSchema(AboutPageSchema).parse(response);
   return validated.data;
 }

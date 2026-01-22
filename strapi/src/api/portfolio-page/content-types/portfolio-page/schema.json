@@ -1,9 +1,9 @@
 {
   "kind": "singleType",
-  "collectionName": "portfolios",
+  "collectionName": "portfolio_pages",
   "info": {
-    "singularName": "portfolio",
-    "pluralName": "portfolios",
+    "singularName": "portfolio-page",
+    "pluralName": "portfolio-pages",
     "displayName": "Portfolio Page"
   },
   "options": {

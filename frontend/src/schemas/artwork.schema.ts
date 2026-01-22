@@ -6,7 +6,7 @@ export const ArtworkSchema = z.object({
   documentId: z.string(),
   title: z.string().nullable(),
   description: z.string().nullable(),
-  image: z.array(MediaSchema),
+  image: MediaSchema,
   createdAt: z.string(),
   updatedAt: z.string(),
   publishedAt: z.string(),

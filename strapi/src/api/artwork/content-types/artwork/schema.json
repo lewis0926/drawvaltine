@@ -13,7 +13,8 @@
   "attributes": {
     "image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
