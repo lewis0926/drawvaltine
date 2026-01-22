@@ -1,12 +1,12 @@
 # =============================================================================
 # Builder stage
 # =============================================================================
-FROM oven/bun:1 AS builder
+FROM oven/bun:1.2 AS builder
 
 WORKDIR /app
 
 COPY package.json bun.lock* ./
-RUN bun install --frozen-lockfile
+RUN bun install
 
 COPY . .
 RUN bun run build
@@ -14,13 +14,10 @@ RUN bun run build
 # =============================================================================
 # Runner stage
 # =============================================================================
-FROM nginx:alpine AS runner
+FROM nginx:alpine3.20
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html/admin/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Default config (can be overridden via volume mount)
-COPY config.json /usr/share/nginx/html/config.json
 
 EXPOSE 80
 

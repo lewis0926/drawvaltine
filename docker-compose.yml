@@ -4,26 +4,20 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "${FRONTEND_PORT:-3000}:80"
+      - 3000:80
     volumes:
       - ./frontend/config.json:/usr/share/nginx/html/config.json:ro
-    depends_on:
-      - strapi
-    restart: unless-stopped
 
   strapi:
     build:
       context: ./strapi
       dockerfile: Dockerfile
     ports:
-      - "${STRAPI_PORT:-1337}:1337"
+      - 1337:1337
     volumes:
       - ./strapi/.env:/app/.env:ro
       - strapi_data:/app/.tmp
       - strapi_uploads:/app/public/uploads
-    environment:
-      - NODE_ENV=${NODE_ENV:-production}
-    restart: unless-stopped
 
 volumes:
   strapi_data:
