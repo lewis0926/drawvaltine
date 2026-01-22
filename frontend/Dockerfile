@@ -16,7 +16,7 @@ RUN bun run build
 # =============================================================================
 FROM nginx:alpine3.20
 
-COPY --from=builder /app/dist /usr/share/nginx/html/admin/
+COPY --from=builder /app/dist /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
