@@ -22,10 +22,10 @@
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-primary);
+  color: var(--color-accent);
 
   &:hover {
-    color: var(--color-accent);
+    color: color-mix(in srgb, var(--color-accent) 70%, #000);
   }
 
   @media (max-width: 768px) {

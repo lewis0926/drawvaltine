@@ -1,14 +1,20 @@
 :root {
-  /* Fresh, calm color palette */
-  --color-primary: #4a5568;
-  --color-accent: #7c9885;
-  --color-text: #3d4852;
-  --color-text-light: #718096;
-  --color-text-muted: #a0aec0;
-  --color-background: #faf9f7;
-  --color-background-alt: #f1efe9;
+  /* Config-driven colors (set via JS from config.json) */
+  --config-primary: #C97C5D;
+  --config-secondary: #F5F1EC;
+
+  /* Derived color palette */
+  --color-accent: var(--config-primary);
+  --color-background: var(--config-secondary);
+  --color-background-alt: color-mix(in srgb, var(--config-secondary) 85%, #000);
   --color-surface: #ffffff;
-  --color-border: #e8e6e1;
+  --color-border: color-mix(in srgb, var(--config-secondary) 70%, #000);
+
+  /* Text colors */
+  --color-primary: #3d4852;
+  --color-text: #3d4852;
+  --color-text-light: #5a6570;
+  --color-text-muted: #8a9199;
 
   /* Typography */
   --font-family: 'Georgia', 'Times New Roman', serif;
@@ -91,7 +97,7 @@ a {
   transition: color var(--transition-speed);
 
   &:hover {
-    color: var(--color-primary);
+    color: color-mix(in srgb, var(--color-accent) 70%, #000);
   }
 }
 
@@ -105,16 +111,15 @@ button, .cta-button {
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: var(--color-accent);
   background-color: transparent;
-  border: 1px solid var(--color-text);
+  border: 1px solid var(--color-accent);
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: all var(--transition-speed);
 
   &:hover {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
+    background-color: var(--color-accent);
     color: var(--color-surface);
   }
 

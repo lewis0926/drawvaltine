@@ -1,0 +1,2 @@
+primaryColor: String
+secondaryColor: String
