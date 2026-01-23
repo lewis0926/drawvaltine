@@ -4,6 +4,7 @@ class ServerConfig {
   host: String = "0.0.0.0"
   port: UInt16 = 1337
   nodeEnv: String = "development"
+  publicUrl: String = ""
 }
 
 class SecretsConfig {
@@ -35,6 +36,7 @@ function toEnv(): String = """
   HOST=\(server.host)
   PORT=\(server.port)
   NODE_ENV=\(server.nodeEnv)
+  PUBLIC_URL=\(server.publicUrl)
 
   # Secrets
   APP_KEYS=\(secrets.appKeys)

@@ -1,0 +1,45 @@
+services:
+  frontend:
+    image: ghcr.io/lewis0926/drawvaltine/frontend:latest
+    restart: unless-stopped
+    volumes:
+      - ./frontend/config.json:/usr/share/nginx/html/config.json:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`drawvaltine.com`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=le"
+    networks:
+      - web
+
+  strapi:
+    image: ghcr.io/lewis0926/drawvaltine/strapi:latest
+    restart: unless-stopped
+    env_file:
+      - ./strapi/.env
+    volumes:
+      - strapi_data:/app/db
+      - strapi_uploads:/app/public/uploads
+    labels:
+      - "traefik.enable=true"
+      - >
+        traefik.http.routers.strapi.rule=
+        Host(`drawvaltine.com`) &&
+        (PathPrefix(`/admin`) ||
+         PathPrefix(`/api`) ||
+         PathPrefix(`/uploads`) ||
+         PathPrefix(`/document`))
+      - "traefik.http.routers.strapi.entrypoints=websecure"
+      - "traefik.http.routers.strapi.tls.certresolver=le"
+      - "traefik.http.services.strapi.loadbalancer.server.port=1337"
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
+    name: drawvaltine_web
+
+volumes:
+  strapi_data:
+  strapi_uploads:

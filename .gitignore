@@ -41,6 +41,7 @@ strapi/build
 strapi/.strapi-updater.json
 strapi/.strapi-cloud.json
 strapi/.tmp
+strapi/db
 strapi/*.sql
 strapi/*.sqlite
 strapi/*.sqlite3
