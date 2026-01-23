@@ -3,27 +3,24 @@ import {
   PortfolioSchema,
   AboutPageSchema,
   ArtworkSchema,
-  StrapiResponseSchema,
-  StrapiArrayResponseSchema,
+  PayloadCollectionResponseSchema,
   type Portfolio,
   type AboutPage,
   type Artwork,
 } from '../schemas';
 
 export async function getPortfolio(): Promise<Portfolio> {
-  const response = await getApi<unknown>('/portfolio-page');
-  const validated = StrapiResponseSchema(PortfolioSchema).parse(response);
-  return validated.data;
+  const response = await getApi<unknown>('/globals/portfolio-page?depth=1');
+  return PortfolioSchema.parse(response);
 }
 
 export async function getArtworks(): Promise<Artwork[]> {
-  const response = await getApi<unknown>('/artworks?populate=image');
-  const validated = StrapiArrayResponseSchema(ArtworkSchema).parse(response);
-  return validated.data;
+  const response = await getApi<unknown>('/artwork?depth=1');
+  const validated = PayloadCollectionResponseSchema(ArtworkSchema).parse(response);
+  return validated.docs;
 }
 
 export async function getAboutPage(): Promise<AboutPage> {
-  const response = await getApi<unknown>('/about-page?populate=profilePic');
-  const validated = StrapiResponseSchema(AboutPageSchema).parse(response);
-  return validated.data;
+  const response = await getApi<unknown>('/globals/about-page?depth=1');
+  return AboutPageSchema.parse(response);
 }

@@ -48,6 +48,12 @@ strapi/*.sqlite3
 strapi/public/uploads/*
 !strapi/public/uploads/.gitkeep
 
+# PayloadCMSπpac
+payload/.vscode
+payload/.env
+payload/node_modules
+payload/**/*.db
+
 # TypeScript
 *.tsbuildinfo
 

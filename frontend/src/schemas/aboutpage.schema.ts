@@ -1,16 +1,14 @@
 import { z } from 'zod';
 import { MediaSchema } from './media.schema';
+import { RichTextSchema } from './richtext.schema';
 
 export const AboutPageSchema = z.object({
-  id: z.number(),
-  documentId: z.string(),
   title: z.string(),
-  subtitle: z.string().nullable(),
-  body: z.string().nullable(),
-  profilePic: MediaSchema.nullable(),
+  subtitle: z.string().nullable().optional(),
+  body: RichTextSchema,
+  profileImage: MediaSchema.nullable().optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
-  publishedAt: z.string(),
 });
 
 export type AboutPage = z.infer<typeof AboutPageSchema>;

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import Markdown from 'react-markdown';
 import { Link } from 'react-router-dom';
 import { getAboutPage } from '../api/api';
 import { getConfig } from '../config';
+import { serializeRichText } from '../utils/richtext';
 import './HomePage.css';
 
 export function HomePage() {
@@ -28,9 +28,11 @@ export function HomePage() {
     );
   }
 
-  const profilePicUrl = aboutPage?.profilePic
-    ? `${config.apiUrl.replace('/api', '')}${aboutPage.profilePic.formats?.large?.url || aboutPage.profilePic.url}`
+  const profilePicUrl = aboutPage?.profileImage
+    ? `${config.apiUrl.replace('/api', '')}${aboutPage.profileImage.url}`
     : null;
+
+  const bodyHtml = aboutPage?.body ? serializeRichText(aboutPage.body) : '';
 
   return (
     <div className="home-page">
@@ -41,10 +43,11 @@ export function HomePage() {
             {aboutPage?.subtitle && (
               <p className="subtitle">{aboutPage.subtitle}</p>
             )}
-            {aboutPage?.body && (
-              <div className="body-content">
-                <Markdown>{aboutPage.body}</Markdown>
-              </div>
+            {bodyHtml && (
+              <div
+                className="body-content"
+                dangerouslySetInnerHTML={{ __html: bodyHtml }}
+              />
             )}
             <Link to="/portfolio" className="cta-button">
               View Portfolio
@@ -54,7 +57,7 @@ export function HomePage() {
             <div className="about-image">
               <img
                 src={profilePicUrl}
-                alt={aboutPage?.profilePic?.alternativeText || 'Profile picture'}
+                alt={aboutPage?.profileImage?.alt || 'Profile picture'}
                 className="profile-pic"
               />
             </div>

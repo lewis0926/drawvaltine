@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import Markdown from 'react-markdown';
 import { getPortfolio, getArtworks } from '../api/api';
 import { getConfig } from '../config';
+import { serializeRichText } from '../utils/richtext';
 import type { Artwork, Media } from '../schemas';
 import './PortfolioPage.css';
 
@@ -14,7 +14,7 @@ interface LightboxProps {
 
 function Lightbox({ image, artwork, onClose }: LightboxProps) {
   const config = getConfig();
-  const imageUrl = `${config.apiUrl.replace('/api', '')}${image.formats?.large?.url || image.url}`;
+  const imageUrl = `${config.apiUrl.replace('/api', '')}${image.url}`;
 
   return (
     <div className="lightbox-overlay" onClick={onClose}>
@@ -24,7 +24,7 @@ function Lightbox({ image, artwork, onClose }: LightboxProps) {
       <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
         <img
           src={imageUrl}
-          alt={image.alternativeText || artwork.title || 'Artwork'}
+          alt={image.alt || artwork.title || 'Artwork'}
           className="lightbox-image"
         />
         {(artwork.title || artwork.description) && (
@@ -47,7 +47,7 @@ function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
   const config = getConfig();
   const image = artwork.image;
   const imageUrl = image
-    ? `${config.apiUrl.replace('/api', '')}${image.formats?.medium?.url || image.url}`
+    ? `${config.apiUrl.replace('/api', '')}${image.url}`
     : null;
 
   return (
@@ -56,7 +56,7 @@ function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
         <div className="artwork-image-container">
           <img
             src={imageUrl}
-            alt={image?.alternativeText || artwork.title || 'Artwork'}
+            alt={image?.alt || artwork.title || 'Artwork'}
             className="artwork-image"
             loading="lazy"
           />
@@ -100,13 +100,19 @@ export function PortfolioPage() {
     );
   }
 
+  const contentHtml = portfolio?.content ? serializeRichText(portfolio.content) : '';
+
   return (
     <div className="portfolio-page">
-      <h1>Portfolio</h1>
-      {portfolio?.body && (
-        <div className="portfolio-body">
-          <Markdown>{portfolio.body}</Markdown>
-        </div>
+      <h1>{portfolio?.title || 'Portfolio'}</h1>
+      {portfolio?.subtitle && (
+        <p className="portfolio-subtitle">{portfolio.subtitle}</p>
+      )}
+      {contentHtml && (
+        <div
+          className="portfolio-body"
+          dangerouslySetInnerHTML={{ __html: contentHtml }}
+        />
       )}
       <div className="gallery">
         {artworks?.map((artwork) => (
