@@ -3,13 +3,14 @@ import type { CollectionConfig } from 'payload'
 export const Artwork: CollectionConfig = {
   slug: 'artwork',
   access: {
-    read: ({ req: {user} }) => {
-        return {
-            _status: {
-                equals: 'published'
-            }
-        }
-    },
+    read: () => true,
+    // read: ({ req: {user} }) => {
+    //     return {
+    //         _status: {
+    //             equals: 'published'
+    //         }
+    //     }
+    // },
   },
   admin: {
     useAsTitle: 'title',

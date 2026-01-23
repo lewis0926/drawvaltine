@@ -11,7 +11,7 @@ build/
 
 # Environment files
 frontend/pkl/configs
-strapi/pkl/configs
+payload/pkl/configs
 
 # Generated config
 config.json
@@ -31,28 +31,34 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Strapi
-strapi/.env
-strapi/license.txt
-strapi/exports
-strapi/.strapi
-strapi/dist
-strapi/build
-strapi/.strapi-updater.json
-strapi/.strapi-cloud.json
-strapi/.tmp
-strapi/db
-strapi/*.sql
-strapi/*.sqlite
-strapi/*.sqlite3
-strapi/public/uploads/*
-!strapi/public/uploads/.gitkeep
-
-# PayloadCMSπpac
+# PayloadCMS
 payload/.vscode
 payload/.env
 payload/node_modules
 payload/**/*.db
+payload/.next/
+payload/out/
+payload/build/
+payload/.pnp
+payload/.pnp.js
+payload/.yarn/install-state.gz
+payload/coverage
+payload/build
+payload/.DS_Store
+payload/*.pem
+payload/npm-debug.log*
+payload/yarn-debug.log*
+payload/yarn-error.log*
+payload/.env*.local
+payload/.vercel
+payload/*.tsbuildinfo
+payload/next-env.d.ts
+payload/media
+payload/test-results/
+payload/playwright-report/
+payload/blob-report/
+payload/playwright/.cache/
+payload/data
 
 # TypeScript
 *.tsbuildinfo

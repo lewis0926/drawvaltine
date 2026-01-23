@@ -1,0 +1,10 @@
+module Config
+
+databaseUrl: String = "file:./data/payload.db"
+payloadSecret: String
+
+function toEnv(): String = 
+"""
+DATABASE_URL=\(databaseUrl)
+PAYLOAD_SECRET=\(payloadSecret)
+"""

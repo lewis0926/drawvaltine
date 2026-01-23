@@ -4,22 +4,22 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - 3000:80
+      - 5173:80
     volumes:
       - ./frontend/config.json:/usr/share/nginx/html/config.json:ro
 
-  strapi:
+  payload:
     build:
-      context: ./strapi
+      context: ./payload
       dockerfile: Dockerfile
     env_file:
-      - ./strapi/.env
+      - ./payload/.env
     ports:
-      - 1337:1337
+      - 3000:3000
     volumes:
-      - strapi_data:/app/db
-      - strapi_uploads:/app/public/uploads
+      - payload_data:/app/data
+      - payload_media:/app/media
 
 volumes:
-  strapi_data:
-  strapi_uploads:
+  payload_data:
+  payload_media:
