@@ -8,6 +8,22 @@ services:
     volumes:
       - ./frontend/config.json:/usr/share/nginx/html/config.json:ro
 
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: payload
+      POSTGRES_PASSWORD: 12345678
+      POSTGRES_DB: payload
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payload"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   payload:
     build:
       context: ./payload
@@ -17,9 +33,11 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - payload_data:/app/data
       - payload_media:/app/media
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
-  payload_data:
+  postgres_data:
   payload_media:

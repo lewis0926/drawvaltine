@@ -1,0 +1,6 @@
+.env
+.next
+.vscode
+data
+node_modules
+media

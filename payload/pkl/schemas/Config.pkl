@@ -1,6 +1,6 @@
 module Config
 
-databaseUrl: String = "file:./data/payload.db"
+databaseUrl: String = "postgresql://payload:payload@postgres:5432/payload"
 payloadSecret: String
 
 function toEnv(): String = 
