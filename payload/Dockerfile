@@ -23,9 +23,6 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN bun run build
 
-# Ensure migrations folder exists (may be empty initially)
-RUN mkdir -p migrations
-
 # Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
@@ -58,5 +55,5 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-# Run migrations then start server
+# Run start server
 CMD node server.js
