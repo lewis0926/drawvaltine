@@ -3,8 +3,16 @@ module Config
 databaseUrl: String = "postgresql://payload:payload@postgres:5432/payload"
 payloadSecret: String
 
+postgresUser: String = "payload"
+postgresPassword: String
+postgresDb: String = "payload"
+
 function toEnv(): String = 
 """
 DATABASE_URL=\(databaseUrl)
 PAYLOAD_SECRET=\(payloadSecret)
+
+POSTGRES_USER=\(postgresUser)
+POSTGRES_PASSWORD=\(postgresPassword)
+POSTGRES_DB=\(postgresDb)
 """

@@ -1,6 +1,5 @@
 #!/bin/bash
-# Deploy frontend and strapi application
-# Prerequisites: Run init-ssl.sh first to set up nginx-proxy and SSL
+# Deploy frontend and payload application
 
 set -e
 
@@ -17,21 +16,21 @@ sh ./generate-config.sh production
 cd "$SCRIPT_DIR"
 
 # Ensure remote directories exist
-ssh drawvaltine "mkdir -p ~/drawvaltine/frontend ~/drawvaltine/strapi"
+ssh drawvaltine "mkdir -p ~/drawvaltine/frontend ~/drawvaltine/payload"
 
 # SCP files to the server
 echo "Copying files to server..."
-scp ./docker-compose.prod.yml drawvaltine:~/drawvaltine/
+scp ./docker-compose.yml drawvaltine:~/drawvaltine/
 scp ../frontend/config.json drawvaltine:~/drawvaltine/frontend/
-scp ../strapi/.env drawvaltine:~/drawvaltine/strapi/
+scp ../payload/.env drawvaltine:~/drawvaltine/payload/
 
 # SSH into the server and deploy
 echo "Deploying containers..."
 ssh drawvaltine << 'ENDSSH'
   cd ~/drawvaltine
-  sudo docker compose -f docker-compose.prod.yml pull
-  sudo docker compose -f docker-compose.prod.yml down
-  sudo docker compose -f docker-compose.prod.yml up -d
+  sudo docker compose -f docker-compose.yml pull
+  sudo docker compose -f docker-compose.yml down
+  sudo docker compose -f docker-compose.yml up -d
 ENDSSH
 
 echo "=== Deployment complete! ==="
