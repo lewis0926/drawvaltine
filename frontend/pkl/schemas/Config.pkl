@@ -1,6 +1,0 @@
-module Config
-import "Styles.pkl"
-
-port: UInt16 = 5173
-apiUrl: String
-styles: Styles

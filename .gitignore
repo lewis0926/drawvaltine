@@ -5,13 +5,14 @@ node_modules/
 dist/
 build/
 .cache/
+.next/
+out/
 
 # Claude
 .claude
 
 # Environment files
-frontend/pkl/configs
-payload/pkl/configs
+pkl/configs
 
 # Generated config
 config.json
@@ -30,38 +31,31 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# PayloadCMS
-payload/.vscode
-payload/.env
-payload/node_modules
-payload/**/*.db
-payload/.next/
-payload/out/
-payload/build/
-payload/.pnp
-payload/.pnp.js
-payload/.yarn/install-state.gz
-payload/coverage
-payload/build
-payload/.DS_Store
-payload/*.pem
-payload/npm-debug.log*
-payload/yarn-debug.log*
-payload/yarn-error.log*
-payload/.env*.local
-payload/.vercel
-payload/*.tsbuildinfo
-payload/next-env.d.ts
-payload/media
-payload/test-results/
-payload/playwright-report/
-payload/blob-report/
-payload/playwright/.cache/
-payload/data
+# Environment
+.env
+.env*.local
+.env.local
 
-# TypeScript
+# NextJS / Payload
+next-env.d.ts
 *.tsbuildinfo
+*.pem
+.vercel
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# Data & uploads
+data/
+media/
+**/*.db
 
 # Testing
 coverage/
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

@@ -1,24 +1,57 @@
 # Portfolio Website – Project Context
 
 Personal art portfolio website using a modern TypeScript-first stack.
-Frontend consumes content from a headless CMS.
+A single Next.js app that serves both the Payload CMS admin and the public-facing portfolio frontend.
 
 ---
 
-## Frontend (FE)
+## Stack
 
 - **Runtime**: Bun
-- **Framework**: React
-- **Bundler**: Vite
+- **Framework**: Next.js (App Router)
 - **Language**: TypeScript
+- **CMS**: Payload CMS (embedded in Next.js)
+- **Database**: PostgreSQL (via `@payloadcms/db-postgres`)
+- **Deployment**: Vercel
+
+---
+
+## Project Structure
+
+```
+src/
+  app/
+    (frontend)/       ← Public portfolio site
+      layout.tsx      ← Root layout (Providers + Header)
+      page.tsx        ← Home / About page
+      portfolio/
+        page.tsx      ← Portfolio gallery page
+      components/     ← Shared UI components (e.g. Header)
+      lib/            ← API client and fetch functions
+      schemas/        ← Zod schemas for Payload API responses
+      utils/          ← Utilities (e.g. richtext serialiser)
+    (payload)/        ← Payload CMS admin (auto-generated, do not edit)
+  collections/        ← Payload collection definitions
+  globals/            ← Payload global definitions
+  migrations/         ← Database migrations
+  payload.config.ts   ← Payload configuration
+```
+
+---
+
+## Frontend (src/app/(frontend)/)
 
 ### Libraries
-- `@tanstack/react-query`
-- `zod`
+- `@tanstack/react-query` — client-side data fetching
+- `zod` — API response validation
+
+### API
+- All API calls go through `lib/client.ts` using `NEXT_PUBLIC_API_URL` (defaults to `/api`)
+- All responses validated with Zod before use — do not trust raw Payload responses
 
 ### Styling
 - Plain CSS with nesting
-- `App.css` is for **common/root styles only**:
+- `globals.css` is for **common/root styles only**:
     - CSS variables (colors, spacing, typography)
     - Base resets and body styles
     - Common utility classes (`.container`, `.loading`, `.error`)
@@ -56,54 +89,32 @@ Frontend consumes content from a headless CMS.
 
 ---
 
-## Backend (BE)
+## Backend (Payload CMS)
 
-- **Runtime**: Bun
-- **Language**: TypeScript
-- **CMS**: Strapi
-- **Database**: SQLite
-
-Strapi is used purely as a headless CMS and API provider.
-Custom backend logic (hooks, services, controllers) must be written in TypeScript.
+Payload is embedded in the Next.js app — no separate backend service.
+Custom logic (hooks, access control, collections) lives in `src/collections/` and `src/globals/`.
 
 ---
 
 ## Storage
 
-- Images and uploads stored **locally**
-- Use **VM-mounted Docker volumes**
+- Images and uploads stored locally via `media/` directory
+- Use Docker volumes in self-hosted deployments
 - No external object storage
-
----
-
-## Data Rules
-
-- All API responses must be validated with `zod`
-- Do not trust raw Strapi responses
-
----
-
-## Development Setup
-
-- Docker + Docker Compose
-- One-command local startup
-- Persistent volumes for:
-    - SQLite database
-    - Uploaded media
 
 ---
 
 ## Configuration (PKL)
 
-- PKL generates `config.json`
-- `configs` contain env-specific values
-- `schemas` define structure and validation
-- No hard-coded env values in code
+- PKL generates `config.json` (used for local tooling only)
+- `pkl/configs` contain env-specific values (gitignored)
+- `pkl/schemas` define structure and validation
+- Runtime config uses environment variables (`.env`)
 
 ---
 
 ## Notes
 
-- Never commit sensitive info (API keys, secrets)
-- FE and BE are separate services
+- Never commit sensitive info (API keys, secrets, `.env`)
+- FE and CMS are one unified Next.js app — no separate services
 - DB or storage migration may be considered later
