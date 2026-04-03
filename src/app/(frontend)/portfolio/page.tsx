@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useQuery } from '@tanstack/react-query'
 import { getPortfolio, getArtworks } from '../lib/api'
 import { serializeRichText } from '../utils/richtext'
@@ -20,10 +21,12 @@ function Lightbox({ image, artwork, onClose }: LightboxProps) {
         &times;
       </button>
       <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-        <img
+        <Image
           src={image.url}
           alt={image.alt || artwork.title || 'Artwork'}
           className="lightbox-image"
+          width={1600}
+          height={1200}
         />
         {(artwork.title || artwork.description) && (
           <div className="lightbox-info">
@@ -49,11 +52,12 @@ function ArtworkCard({ artwork, onClick }: ArtworkCardProps) {
     <article className="artwork-card" onClick={onClick}>
       {imageUrl && (
         <div className="artwork-image-container">
-          <img
+          <Image
             src={imageUrl}
             alt={image?.alt || artwork.title || 'Artwork'}
             className="artwork-image"
-            loading="lazy"
+            fill
+            sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
           />
         </div>
       )}

@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 import Link from 'next/link'
 import { getAboutPage } from './lib/api'
 import { serializeRichText } from './utils/richtext'
@@ -43,10 +44,12 @@ export default function HomePage() {
         </div>
         {profilePicUrl && (
           <div className="about-image">
-            <img
+            <Image
               src={profilePicUrl}
               alt={aboutPage?.profileImage?.alt || 'Profile picture'}
               className="profile-pic"
+              width={400}
+              height={500}
             />
           </div>
         )}

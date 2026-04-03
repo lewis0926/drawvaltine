@@ -17,6 +17,7 @@ export async function generateMetadata() {
   const ogImageUrl = typeof seo?.ogImage === 'object' && seo.ogImage?.url ? seo.ogImage.url : undefined
 
   return {
+    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
     title: {
       default: siteName,
       template: `%s | ${siteName}`,

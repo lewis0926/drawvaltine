@@ -3,11 +3,13 @@ module Config
 databaseUrl: String
 payloadSecret: String
 blobReadWriteToken: String?
+siteUrl: String?
 
 output {
   text = """
     DATABASE_URL=\(databaseUrl)
     PAYLOAD_SECRET=\(payloadSecret)
     \(if (blobReadWriteToken != null) "BLOB_READ_WRITE_TOKEN=\(blobReadWriteToken)" else "")
+    \(if (siteUrl != null) "NEXT_PUBLIC_SITE_URL=\(siteUrl)" else "")
     """
 }
