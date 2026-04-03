@@ -172,6 +172,29 @@ async function seed() {
     },
   })
 
+  // ── SEO Settings ──────────────────────────────────────────────────────────
+
+  console.log('Seeding SEO settings...')
+
+  const ogImage = await uploadMedia(
+    payload,
+    'https://picsum.photos/seed/og/1200/630',
+    'og-image.jpg',
+    'Drawvaltine — art portfolio social share image',
+  )
+
+  await payload.updateGlobal({
+    slug: 'seo-settings',
+    data: {
+      siteName: 'Drawvaltine',
+      metaDescription:
+        'Drawvaltine — paintings and illustrations by Valentina, a Melbourne-based artist working in oil, gouache, and ink.',
+      ogImage: ogImage.id,
+      ogDescription:
+        'Original paintings and limited prints by Valentina. Oil, gouache, and ink — from studio to coastline.',
+    },
+  })
+
   // ── Artworks ───────────────────────────────────────────────────────────────
 
   console.log('Seeding artworks...')

@@ -11,7 +11,7 @@ import { Media } from './collections/Media'
 import { Artwork } from './collections/Artwork'
 import { AboutPage } from './globals/AboutPage'
 import { PortfolioPage } from './globals/PortfolioPage'
-import { migrations } from './migrations'
+import { SeoSettings } from './globals/SeoSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -26,7 +26,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Artwork],
-  globals: [AboutPage, PortfolioPage],
+  globals: [AboutPage, PortfolioPage, SeoSettings],
   editor: lexicalEditor(),
   email: () => ({
     name: 'noop',

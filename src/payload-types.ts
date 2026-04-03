@@ -92,10 +92,12 @@ export interface Config {
   globals: {
     'about-page': AboutPage;
     'portfolio-page': PortfolioPage;
+    'seo-settings': SeoSetting;
   };
   globalsSelect: {
     'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
     'portfolio-page': PortfolioPageSelect<false> | PortfolioPageSelect<true>;
+    'seo-settings': SeoSettingsSelect<false> | SeoSettingsSelect<true>;
   };
   locale: null;
   user: User & {
@@ -403,6 +405,35 @@ export interface PortfolioPage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-settings".
+ */
+export interface SeoSetting {
+  id: number;
+  /**
+   * Shown in the browser tab and social share titles.
+   */
+  siteName?: string | null;
+  /**
+   * Shown in search engine results. Aim for 150–160 characters.
+   */
+  metaDescription?: string | null;
+  /**
+   * Icon shown in the browser tab. PNG or ICO, ideally 32×32 or 64×64.
+   */
+  favicon?: (number | null) | Media;
+  /**
+   * Image shown when sharing on social media. Recommended: 1200×630.
+   */
+  ogImage?: (number | null) | Media;
+  /**
+   * Overrides the meta description for social sharing. Leave blank to use the meta description.
+   */
+  ogDescription?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about-page_select".
  */
 export interface AboutPageSelect<T extends boolean = true> {
@@ -422,6 +453,20 @@ export interface PortfolioPageSelect<T extends boolean = true> {
   title?: T;
   subtitle?: T;
   content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo-settings_select".
+ */
+export interface SeoSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  metaDescription?: T;
+  favicon?: T;
+  ogImage?: T;
+  ogDescription?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

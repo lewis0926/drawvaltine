@@ -1,66 +1,47 @@
 # Drawvaltine
 
-Personal art portfolio website with React frontend and Strapi CMS backend.
+Personal art portfolio website — Next.js + Payload CMS, deployed on Vercel with Neon (PostgreSQL) and Vercel Blob.
 
-## Prerequisites
+## Stack
 
-- Docker and Docker Compose
-- PKL CLI (optional, for config generation)
+- **Framework**: Next.js (App Router)
+- **CMS**: Payload CMS (embedded)
+- **Database**: Neon (PostgreSQL)
+- **Storage**: Vercel Blob (optional — falls back to local when `BLOB_READ_WRITE_TOKEN` is not set)
+- **Deployment**: Vercel
 
-## Quick Start
+## Getting started
 
-Start the development environment:
-
-```bash
-docker-compose up
-```
-
-This will start:
-- Frontend at http://localhost:5173
-- Strapi admin at http://localhost:1337/admin
-
-## Project Structure
-
-```
-drawvaltine/
-├── frontend/          # React + Vite + TypeScript
-├── backend/           # Strapi CMS
-├── configs/           # PKL configuration
-└── docker-compose.yml
-```
-
-## Development
-
-### Frontend
-
-The frontend uses:
-- React with TypeScript
-- Vite for bundling
-- TanStack Query for data fetching
-- Zod for API response validation
-
-Source files are volume-mounted for hot-reload.
-
-### Backend
-
-The backend uses:
-- Strapi CMS with TypeScript
-- SQLite database
-- Local file uploads
-
-On first run, access the Strapi admin panel to create your admin account.
-
-### Configuration
-
-Environment-specific configuration is managed with PKL:
+Generate your `.env` from PKL:
 
 ```bash
-# Generate config.json from local.pkl
-pkl eval configs/local.pkl -f json -o config.json
+bun run env local
 ```
 
-## Volumes
+Install dependencies and start the dev server:
 
-Persistent data is stored in:
-- `./backend/database/` - SQLite database
-- `./backend/public/uploads/` - Uploaded media files
+```bash
+bun i
+bun run dev
+```
+
+App runs at [http://localhost:3000](http://localhost:3000). Admin panel at [http://localhost:3000/admin](http://localhost:3000/admin).
+
+## Configuration
+
+Environment values are managed with PKL:
+
+```bash
+bun run env local       # uses pkl/configs/local.pkl
+bun run env production  # uses pkl/configs/production.pkl
+```
+
+Config fields: `databaseUrl`, `payloadSecret`, `blobReadWriteToken` (optional).
+
+## Seed
+
+Populate the database with sample content:
+
+```bash
+bun run seed
+```

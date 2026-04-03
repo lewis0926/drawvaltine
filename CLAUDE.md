@@ -33,7 +33,6 @@ src/
     (payload)/        ← Payload CMS admin (auto-generated, do not edit)
   collections/        ← Payload collection definitions
   globals/            ← Payload global definitions
-  migrations/         ← Database migrations
   payload.config.ts   ← Payload configuration
 ```
 
@@ -98,9 +97,8 @@ Custom logic (hooks, access control, collections) lives in `src/collections/` an
 
 ## Storage
 
-- Images and uploads stored locally via `media/` directory
-- Use Docker volumes in self-hosted deployments
-- No external object storage
+- `BLOB_READ_WRITE_TOKEN` present → Vercel Blob
+- Not present → local `media/` directory
 
 ---
 
@@ -117,4 +115,4 @@ Custom logic (hooks, access control, collections) lives in `src/collections/` an
 
 - Never commit sensitive info (API keys, secrets, `.env`)
 - FE and CMS are one unified Next.js app — no separate services
-- DB or storage migration may be considered later
+- Database schema changes are handled manually — no migration workflow
