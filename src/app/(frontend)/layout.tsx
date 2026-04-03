@@ -20,10 +20,10 @@ export async function generateMetadata() {
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
     title: {
       default: siteName,
-      template: `%s | ${siteName}`,
+      template: `${siteName} | %s`,
     },
     description,
-    icons: faviconUrl ? { icon: faviconUrl } : undefined,
+    icons: { icon: faviconUrl || '/favicon.svg' },
     openGraph: {
       siteName,
       description: ogDescription,
