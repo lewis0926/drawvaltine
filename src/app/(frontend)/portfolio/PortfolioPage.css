@@ -4,9 +4,8 @@
   padding: var(--spacing-2xl) var(--spacing-xl);
 
   h1 {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-3xl);
     font-weight: 300;
-    text-align: center;
     margin-bottom: var(--spacing-md);
   }
 
@@ -15,10 +14,15 @@
   }
 }
 
+.portfolio-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-light);
+  font-style: italic;
+  margin-bottom: var(--spacing-xl);
+}
+
 .portfolio-body {
-  max-width: 700px;
-  margin: 0 auto var(--spacing-2xl);
-  text-align: center;
+  margin-bottom: var(--spacing-2xl);
 
   p {
     margin-bottom: var(--spacing-md);

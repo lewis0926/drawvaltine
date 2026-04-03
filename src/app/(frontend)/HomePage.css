@@ -1,14 +1,15 @@
 .home-page {
-  min-height: calc(100vh - 80px);
-  display: flex;
-  align-items: center;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+
+  @media (max-width: 768px) {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
 }
 
 .about-section {
   width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: var(--spacing-2xl) var(--spacing-xl);
 }
 
 .about-content {
@@ -127,8 +128,3 @@
   }
 }
 
-@media (max-width: 480px) {
-  .about-section {
-    padding: var(--spacing-xl) var(--spacing-md);
-  }
-}
