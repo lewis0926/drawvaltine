@@ -30,10 +30,10 @@ async function uploadMedia(
 function paragraph(...text: string[]) {
   return {
     type: 'paragraph',
-    format: '',
+    format: '' as const,
     indent: 0,
     version: 1,
-    direction: 'ltr',
+    direction: 'ltr' as const,
     children: text.map((t) => ({
       type: 'text',
       format: 0,
@@ -52,10 +52,10 @@ function heading(tag: 'h1' | 'h2' | 'h3', text: string) {
   return {
     type: 'heading',
     tag,
-    format: '',
+    format: '' as const,
     indent: 0,
     version: 1,
-    direction: 'ltr',
+    direction: 'ltr' as const,
     children: [
       {
         type: 'text',
@@ -76,10 +76,10 @@ function richText(...nodes: object[]) {
   return {
     root: {
       type: 'root',
-      format: '',
+      format: '' as const,
       indent: 0,
       version: 1,
-      direction: 'ltr',
+      direction: 'ltr' as const,
       children: nodes,
     },
   }

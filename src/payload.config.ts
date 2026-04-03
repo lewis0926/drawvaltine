@@ -28,12 +28,17 @@ export default buildConfig({
   collections: [Users, Media, Artwork],
   globals: [AboutPage, PortfolioPage],
   editor: lexicalEditor(),
+  email: () => ({
+    name: 'noop',
+    defaultFromAddress: '',
+    defaultFromName: '',
+    sendEmail: async () => {},
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
-    prodMigrations: migrations,
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
