@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Loading } from './components/Loading'
 import { getAboutPage } from './lib/api'
 import { serializeRichText } from './utils/richtext'
 import './HomePage.css'
@@ -14,7 +15,7 @@ export default function HomePage() {
   })
 
   if (isLoading) {
-    return <div className="loading">Loading...</div>
+    return <Loading />
   }
 
   if (error) {

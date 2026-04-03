@@ -81,6 +81,14 @@ src/
     ```
 - **Avoid flat selectors** like `.parent .child { }` when nesting is clearer
 
+### Icons
+- Use inline SVG for all icons — no icon libraries
+- SVG icons use `currentColor` for stroke/fill so they inherit CSS color
+
+### Components
+- `components/Loading.tsx` — reusable spinner for async loading states; accepts optional `label` prop
+- Use `<Loading />` instead of plain `<div className="loading">` text
+
 ### Schemas (Zod)
 - **Do not use a single monolithic schema file**
 - Separate schemas by domain (e.g., `media.schema.ts`, `artwork.schema.ts`, `portfolio.schema.ts`)

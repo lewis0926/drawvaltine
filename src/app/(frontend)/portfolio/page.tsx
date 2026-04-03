@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
+import { Loading } from '../components/Loading'
 import { useQuery } from '@tanstack/react-query'
 import { getPortfolio, getArtworks } from '../lib/api'
 import { serializeRichText } from '../utils/richtext'
@@ -85,7 +86,7 @@ export default function PortfolioPage() {
   if (isLoading) {
     return (
       <div className="portfolio-page">
-        <div className="loading">Loading portfolio...</div>
+        <Loading label="Loading portfolio…" />
       </div>
     )
   }
