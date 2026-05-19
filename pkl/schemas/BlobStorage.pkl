@@ -1,0 +1,19 @@
+abstract class BlobStorage {
+  type: "s3" | "vercel"
+}
+
+class S3BlobStorage extends BlobStorage {
+    type: "s3"
+    bucket: String
+    prefix: String?
+    region: String = "auto"
+    endpoint: String
+    publicUrl: String
+    accessKeyId: String
+    secretAccessKey: String
+}
+
+class VercelBlobStorage extends BlobStorage {
+    type: "vercel"
+    token: String
+}

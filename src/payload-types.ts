@@ -86,7 +86,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   fallbackLocale: null;
   globals: {
@@ -131,7 +131,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -155,7 +155,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -174,10 +174,10 @@ export interface Media {
  * via the `definition` "artwork".
  */
 export interface Artwork {
-  id: number;
+  id: string;
   title: string;
   description?: string | null;
-  image: number | Media;
+  image: string | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -186,7 +186,7 @@ export interface Artwork {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number;
+  id: string;
   key: string;
   data:
     | {
@@ -203,24 +203,24 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'artwork';
-        value: number | Artwork;
+        value: string | Artwork;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -230,10 +230,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -253,7 +253,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -355,7 +355,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "about-page".
  */
 export interface AboutPage {
-  id: number;
+  id: string;
   title: string;
   subtitle?: string | null;
   body?: {
@@ -373,7 +373,7 @@ export interface AboutPage {
     };
     [k: string]: unknown;
   } | null;
-  profileImage: number | Media;
+  profileImage: string | Media;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -382,7 +382,7 @@ export interface AboutPage {
  * via the `definition` "portfolio-page".
  */
 export interface PortfolioPage {
-  id: number;
+  id: string;
   title: string;
   subtitle?: string | null;
   content?: {
@@ -408,7 +408,7 @@ export interface PortfolioPage {
  * via the `definition` "seo-settings".
  */
 export interface SeoSetting {
-  id: number;
+  id: string;
   /**
    * Shown in the browser tab and social share titles.
    */
@@ -420,11 +420,11 @@ export interface SeoSetting {
   /**
    * Icon shown in the browser tab. PNG or ICO, ideally 32×32 or 64×64.
    */
-  favicon?: (number | null) | Media;
+  favicon?: (string | null) | Media;
   /**
    * Image shown when sharing on social media. Recommended: 1200×630.
    */
-  ogImage?: (number | null) | Media;
+  ogImage?: (string | null) | Media;
   /**
    * Overrides the meta description for social sharing. Leave blank to use the meta description.
    */

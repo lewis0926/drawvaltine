@@ -1,15 +1,29 @@
 module Config
+import "BlobStorage.pkl"
 
 databaseUrl: String
 payloadSecret: String
-blobReadWriteToken: String?
+blobStorage: (BlobStorage.S3BlobStorage|BlobStorage.VercelBlobStorage)?
 siteUrl: String?
+
+local storageLines: String =
+  if (blobStorage is BlobStorage.S3BlobStorage)
+    "STORAGE_PROVIDER=s3\n" +
+    "S3_BUCKET=\(blobStorage.bucket)\n" +
+    "S3_REGION=\(blobStorage.region)\n" +
+    "S3_ENDPOINT=\(blobStorage.endpoint)\n" +
+    "S3_PUBLIC_URL=\(blobStorage.publicUrl)\n" +
+    "S3_ACCESS_KEY_ID=\(blobStorage.accessKeyId)\n" +
+    "S3_SECRET_ACCESS_KEY=\(blobStorage.secretAccessKey)"
+  else if (blobStorage is BlobStorage.VercelBlobStorage)
+    "BLOB_READ_WRITE_TOKEN=\(blobStorage.token)"
+  else ""
 
 output {
   text = """
     DATABASE_URL=\(databaseUrl)
     PAYLOAD_SECRET=\(payloadSecret)
-    \(if (blobReadWriteToken != null) "BLOB_READ_WRITE_TOKEN=\(blobReadWriteToken)" else "")
+    \(storageLines)
     \(if (siteUrl != null) "NEXT_PUBLIC_SITE_URL=\(siteUrl)" else "")
     """
 }

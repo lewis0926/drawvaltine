@@ -1,4 +1,5 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
@@ -16,7 +17,40 @@ import { SeoSettings } from './globals/SeoSettings'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+function getStoragePlugin() {
+  if (process.env.STORAGE_PROVIDER === 's3') {
+    return s3Storage({
+      bucket: process.env.S3_BUCKET ?? '',
+      collections: {
+        media: true,
+      },
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID ?? '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY ?? '',
+        },
+        endpoint: process.env.S3_ENDPOINT ?? '',
+        forcePathStyle: true,
+        region: process.env.S3_REGION ?? 'auto',
+      },
+    })
+  }
+
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+  if (blobToken) {
+    return vercelBlobStorage({
+      enabled: true,
+      collections: {
+        media: true,
+      },
+      token: blobToken,
+    })
+  }
+
+  return null
+}
+
+const storagePlugin = getStoragePlugin()
 
 export default buildConfig({
   admin: {
@@ -42,19 +76,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    idType: 'uuid',
   }),
   sharp,
-  plugins: [
-    ...(blobToken
-      ? [
-          vercelBlobStorage({
-            enabled: true,
-            collections: {
-              media: true,
-            },
-            token: blobToken,
-          }),
-        ]
-      : []),
-  ],
+  plugins: [...(storagePlugin ? [storagePlugin] : [])],
 })
