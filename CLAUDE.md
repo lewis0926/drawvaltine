@@ -119,6 +119,18 @@ Custom logic (hooks, access control, collections) lives in `src/collections/` an
 
 ---
 
+## AI Crawlability
+
+The following files handle AI/search crawler access. Keep them in sync whenever routes change.
+
+- **`src/app/robots.ts`** -- Next.js metadata route, allows all crawlers and points to the sitemap
+- **`src/app/sitemap.ts`** -- Lists all public pages. Add a new entry here whenever a new route is added under `(frontend)/`
+- **`public/llms.txt`** -- Points crawlers to the sitemap; no hardcoded content (avoids stale seed info)
+
+When adding a new page route under `src/app/(frontend)/`, add a corresponding entry to `sitemap.ts`.
+
+---
+
 ## Notes
 
 - Never commit sensitive info (API keys, secrets, `.env`)
